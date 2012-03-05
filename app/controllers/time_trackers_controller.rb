@@ -13,7 +13,18 @@ class TimeTrackersController < ApplicationController
 
     def start
         @time_tracker = current
-        if @time_tracker.nil?
+
+        if @time_tracker.nil? or @time_tracker.paused
+        else
+            @time_tracker.time_spent = @time_tracker.hours_spent
+            @time_tracker.paused = true
+            if @time_tracker.save
+            else
+            end
+        end
+
+        if 1
+#        if @time_tracker.nil?
             @issue = Issue.find(:first, :conditions => { :id => params[:issue_id] })
             @time_tracker = TimeTracker.new({ :issue_id => @issue.id })
 
@@ -70,7 +81,7 @@ class TimeTrackersController < ApplicationController
             hours = @time_tracker.hours_spent.round(2)
             @time_tracker.destroy
 
-            redirect_to :controller => 'issues', :action => 'edit', :id => issue_id, :time_entry => { :hours => hours }
+            redirect_to :controller => '/timelog', :action => 'new', :issue_id => issue_id, :time_entry => { :hours => hours}
         end
     end
 
@@ -107,7 +118,7 @@ class TimeTrackersController < ApplicationController
     protected
 
     def current
-        TimeTracker.find(:first, :conditions => { :user_id => User.current.id })
+        TimeTracker.find(:first, :conditions => { :user_id => User.current.id }, :order=>'paused ASC')
     end
 
     def apply_status_transition(issue)

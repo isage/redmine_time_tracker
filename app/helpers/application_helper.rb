@@ -3,6 +3,10 @@ module ApplicationHelper
         TimeTracker.find(:first, :conditions => { :user_id => user.id })
     end
 
+    def current_time_tracker_for(user)
+        TimeTracker.find(:first, :conditions => { :user_id => user.id }, :order => 'paused ASC' )
+    end
+
     def status_from_id(status_id)
         IssueStatus.find(:first, :conditions => { :id => status_id })
     end

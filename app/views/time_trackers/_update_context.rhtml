@@ -1,5 +1,6 @@
 <% time_tracker = time_tracker_for(User.current) %>
-<% if !time_tracker.nil? %>
+<%# if !time_tracker.nil? %>
+<% if nil %>
     <% if time_tracker.paused %>
         <%# A time tracker is paused, display the resume action %>
         <li>
@@ -19,7 +20,7 @@
         %>
         </li>
     <% end %>
-
+ 
     <%# A time tracker exists, display the stop action %>
     <li>
         <%= link_to l(:stop_time_tracker).capitalize + ' #' + time_tracker.issue_id.to_s, { :controller => '/time_trackers', :action => 'stop' },
