@@ -39,4 +39,7 @@ ru:
   time_tracker_settings_unknown_status: "Неизвестный статус"
   time_tracker_settings_zombie_transition: "zombie status transition"
   time_tracker_zombie_legend: "zombie time tracker"
+  time_tracker_label_status: "Статус"
+  time_tracker_label_status_running: "запущен"
+  time_tracker_label_status_paused: "на паузе"
 
