@@ -44,26 +44,26 @@
                                             :url => { :controller => '/time_trackers', :action => 'start', :issue_id => time_tracker[:issue_id] },
                                             :html => { :class => 'icon icon-start tracker_start', :title => l(:start_time_tracker), :id =>"tracker_start_" + time_tracker.id.to_s },
                                             :update => 'time-tracker-menu',
-                                            :complete => "$$('.tracker_status_row').each(function(elem){elem.update('"+ l(:time_tracker_label_status_paused) +"');});$('timetracker_status_" + time_tracker.id.to_s + "').update('"+ l(:time_tracker_label_status_running) +"');  $$('.tracker_start').each(Element.show); $$('.tracker_pause').each(Element.hide); $('#{'tracker_start_' + time_tracker.id.to_s}').hide(); $('#{'tracker_suspend_' + time_tracker.id.to_s}').show();"
+                                            :complete => "updateTrackersStatus('"+ l(:time_tracker_label_status_paused) +"','"+ l(:time_tracker_label_status_running) +"','"+time_tracker.id.to_s+"', true);"
                                         %>
                                         <%= link_to_remote l(:suspend_time_tracker),
                                             :url => { :controller => '/time_trackers', :action => 'suspend', :issue_id => time_tracker[:issue_id] },
                                             :html => { :class => 'icon icon-pause tracker_pause', :title => l(:suspend_time_tracker), :id =>"tracker_suspend_" + time_tracker.id.to_s, :style=>"display: none" },
                                             :update => 'time-tracker-menu',
-                                            :complete => "$$('.tracker_status_row').each(function(elem){elem.update('"+ l(:time_tracker_label_status_paused) +"');});$$('.tracker_start').each(Element.hide); $$('.tracker_pause').each(Element.show); $('#{'tracker_start_' + time_tracker.id.to_s}').show(); $('#{'tracker_suspend_' + time_tracker.id.to_s}').hide();"
+                                            :complete => "updateTrackersStatus('"+ l(:time_tracker_label_status_paused) +"','"+ l(:time_tracker_label_status_running) +"','"+time_tracker.id.to_s+"', false);"
                                         %>
                                     <% else %>
                                         <%= link_to_remote l(:start_time_tracker),
                                             :url => { :controller => '/time_trackers', :action => 'start', :issue_id => time_tracker[:issue_id] },
                                             :html => { :class => 'icon icon-start tracker_start', :title => l(:start_time_tracker), :id => "tracker_start_" + time_tracker.id.to_s, :style=>"display: none" },
                                             :update => 'time-tracker-menu',
-                                            :complete => "$$('.tracker_status_row').each(function(elem){elem.update('"+ l(:time_tracker_label_status_paused) +"');});$('timetracker_status_" + time_tracker.id.to_s + "').update('"+ l(:time_tracker_label_status_running) +"');$$('.tracker_start').each(Element.show); $$('.tracker_pause').each(Element.hide); $('#{'tracker_start_' + time_tracker.id.to_s}').hide(); $('#{'tracker_suspend_' + time_tracker.id.to_s}').show();"
+                                            :complete => "updateTrackersStatus('"+ l(:time_tracker_label_status_paused) +"','"+ l(:time_tracker_label_status_running) +"','"+time_tracker.id.to_s+"', true);"
                                         %>
                                         <%= link_to_remote l(:suspend_time_tracker),
                                             :url => { :controller => '/time_trackers', :action => 'suspend', :issue_id => time_tracker[:issue_id] },
                                             :html => { :class => 'icon icon-pause tracker_pause', :title => l(:suspend_time_tracker), :id =>"tracker_suspend_" + time_tracker.id.to_s },
                                             :update => 'time-tracker-menu',
-                                            :complete => "$$('.tracker_status_row').each(function(elem){elem.update('"+ l(:time_tracker_label_status_paused) +"');});$$('.tracker_start').each(Element.hide); $$('.tracker_pause').each(Element.show); $('#{'tracker_start_' + time_tracker.id.to_s}').show(); $('#{'tracker_suspend_' + time_tracker.id.to_s}').hide();"
+                                            :complete => "updateTrackersStatus('"+ l(:time_tracker_label_status_paused) +"','"+ l(:time_tracker_label_status_running) +"','"+time_tracker.id.to_s+"', false);"
                                         %>
                                     <% end %>
                                     <%= link_to l(:stop_time_tracker),
