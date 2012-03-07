@@ -10,7 +10,8 @@
         <%= link_to_remote '',
             :url => { :controller => '/time_trackers', :action => 'start', :issue_id => time_tracker.issue_id },
             :html => { :class => 'icon-action icon-start-action', :title => l(:resume_time_tracker) },
-            :update => 'time-tracker-menu'
+            :update => 'time-tracker-menu',
+            :complete => "updateTrackersStatus('"+ l(:time_tracker_label_status_paused) +"','"+ l(:time_tracker_label_status_running) +"','"+time_tracker.id.to_s+"', true);"
         %>
         <%= link_to '',
             { :controller => '/time_trackers', :action => 'stop', :issue_id => time_tracker.issue_id },
@@ -26,7 +27,8 @@
         <%= link_to_remote '',
             :url => { :controller => '/time_trackers', :action => 'suspend', :issue_id => time_tracker.issue_id },
             :html => { :class => 'icon-action icon-pause-action', :title => l(:suspend_time_tracker) },
-            :update => 'time-tracker-menu'
+            :update => 'time-tracker-menu',
+            :complete => "updateTrackersStatus('"+ l(:time_tracker_label_status_paused) +"','"+ l(:time_tracker_label_status_running) +"','"+time_tracker.id.to_s+"', false);"
         %>
         <%= link_to '',
             { :controller => '/time_trackers', :action => 'stop', :issue_id => time_tracker.issue_id },
