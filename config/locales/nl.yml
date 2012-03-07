@@ -40,4 +40,6 @@ nl:
   time_tracker_settings_unknown_status: "Onbekende status"
   time_tracker_settings_zombie_transition: "zombie statuswijziging"
   time_tracker_zombie_legend: "zombie timer"
-
+  time_tracker_label_status: "Status"
+  time_tracker_label_status_running: "in proces"
+  time_tracker_label_status_paused: "gepauzeerd"

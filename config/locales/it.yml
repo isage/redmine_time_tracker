@@ -40,4 +40,6 @@ it:
   time_tracker_settings_unknown_status: "Stato sconosciuto"
   time_tracker_settings_zombie_transition: "Transizione in stato zombie"
   time_tracker_zombie_legend: "time tracker zombie"
-
+  time_tracker_label_status: "Stato"
+  time_tracker_label_status_running: "funzionamento"
+  time_tracker_label_status_paused: "pausa"

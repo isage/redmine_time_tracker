@@ -40,4 +40,6 @@ ja:
   time_tracker_settings_unknown_status: "不明なステータス"
   time_tracker_settings_zombie_transition: "ゾンビステータスの移行"
   time_tracker_zombie_legend: "ゾンビ"
-
+  time_tracker_label_status: "ステータス"
+  time_tracker_label_status_running: "プロセスの"
+  time_tracker_label_status_paused: "一時停止中"

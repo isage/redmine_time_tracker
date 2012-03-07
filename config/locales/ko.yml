@@ -40,4 +40,6 @@ ko:
   time_tracker_settings_unknown_status: "알 수 없는 상태"
   time_tracker_settings_zombie_transition: "좀비 상태 전환"
   time_tracker_zombie_legend: "좀비 추적자"
-
+  time_tracker_label_status: "지위"
+  time_tracker_label_status_running: "과정에서"
+  time_tracker_label_status_paused: "일시 중지"

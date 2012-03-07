@@ -40,4 +40,6 @@ cs:
   time_tracker_settings_unknown_status: "Neznámý stav"
   time_tracker_settings_zombie_transition: "zombie přechod stavu"
   time_tracker_zombie_legend: "zombie sledování času"
-
+  time_tracker_label_status: "Postavení"
+  time_tracker_label_status_running: "v práci"
+  time_tracker_label_status_paused: "pozastavena"
