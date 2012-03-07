@@ -44,7 +44,7 @@ class TimeTrackersController < ApplicationController
     end
 
     def resume
-        @time_tracker = current
+        @time_tracker = tracker_by_issue(params[:issue_id])
         if @time_tracker.nil? or not @time_tracker.paused
             flash[:error] = l(:no_time_tracker_suspended)
             redirect_to :back
@@ -60,7 +60,7 @@ class TimeTrackersController < ApplicationController
     end
 
     def suspend
-        @time_tracker = current
+        @time_tracker = tracker_by_issue(params[:issue_id])
         if @time_tracker.nil? or @time_tracker.paused
             flash[:error] = l(:no_time_tracker_running)
             redirect_to :back
@@ -76,7 +76,7 @@ class TimeTrackersController < ApplicationController
     end
 
     def stop
-        @time_tracker = current
+        @time_tracker = tracker_by_issue(params[:issue_id])
         if @time_tracker.nil?
             flash[:error] = l(:no_time_tracker_running)
             redirect_to :back
@@ -120,10 +120,6 @@ class TimeTrackersController < ApplicationController
     end
 
     protected
-
-    def current
-        TimeTracker.find(:first, :conditions => { :user_id => User.current.id }, :order=>'paused ASC')
-    end
 
     def tracker_by_issue(issue)
         TimeTracker.find(:first, :conditions => { :user_id => User.current.id, :issue_id => issue})

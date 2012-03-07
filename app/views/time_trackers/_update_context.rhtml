@@ -1,11 +1,10 @@
-<% time_tracker = time_tracker_for(User.current) %>
-<%# if !time_tracker.nil? %>
-<% if nil %>
+<% time_tracker = current_time_tracker_for_issue(User.current, @issue.id) %>
+<% if !time_tracker.nil? %>
     <% if time_tracker.paused %>
         <%# A time tracker is paused, display the resume action %>
         <li>
         <%= link_to_remote l(:resume_time_tracker).capitalize + ' #' + time_tracker.issue_id.to_s,
-            :url => { :controller => '/time_trackers', :action => 'resume' },
+            :url => { :controller => '/time_trackers', :action => 'start', :issue_id => time_tracker.issue_id },
             :html => { :class => 'icon icon-start' },
             :update => 'time-tracker-menu'
         %>
@@ -14,7 +13,7 @@
         <%# A time tracker is not paused, display the suspend action %>
         <li>
         <%= link_to_remote l(:suspend_time_tracker).capitalize + ' #' + time_tracker.issue_id.to_s,
-            :url => { :controller => '/time_trackers', :action => 'suspend' },
+            :url => { :controller => '/time_trackers', :action => 'suspend', :issue_id => @issue.id },
             :html => { :class => 'icon icon-pause' },
             :update => 'time-tracker-menu'
         %>
