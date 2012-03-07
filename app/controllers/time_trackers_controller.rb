@@ -43,22 +43,6 @@ class TimeTrackersController < ApplicationController
         end
     end
 
-    def resume
-        @time_tracker = tracker_by_issue(params[:issue_id])
-        if @time_tracker.nil? or not @time_tracker.paused
-            flash[:error] = l(:no_time_tracker_suspended)
-            redirect_to :back
-        else
-            @time_tracker.started_on = Time.now
-            @time_tracker.paused = false
-            if @time_tracker.save
-                render_menu
-            else
-                flash[:error] = l(:resume_time_tracker_error)
-            end
-        end
-    end
-
     def suspend
         @time_tracker = tracker_by_issue(params[:issue_id])
         if @time_tracker.nil? or @time_tracker.paused
