@@ -43,13 +43,15 @@
                                         <%= link_to_remote l(:start_time_tracker),
                                             :url => { :controller => '/time_trackers', :action => 'start', :issue_id => time_tracker[:issue_id] },
                                             :html => { :class => 'icon icon-start', :title => l(:start_time_tracker) },
-                                            :update => 'time-tracker-menu'
+                                            :update => 'time-tracker-menu',
+                                            :complete => "window.location.href=window.location.href"
                                         %>
                                     <% else %>
                                         <%= link_to_remote l(:suspend_time_tracker),
                                             :url => { :controller => '/time_trackers', :action => 'suspend', :issue_id => time_tracker[:issue_id] },
                                             :html => { :class => 'icon icon-pause', :title => l(:suspend_time_tracker) },
-                                            :update => 'time-tracker-menu'
+                                            :update => 'time-tracker-menu',
+                                            :complete => "window.location.href=window.location.href"
                                         %>
                                     <% end %>
                                     <%= link_to l(:stop_time_tracker),
