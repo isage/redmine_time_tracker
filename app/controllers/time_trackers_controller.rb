@@ -12,19 +12,20 @@ class TimeTrackersController < ApplicationController
     end
 
     def start
-        @time_tracker = current
-
-        if @time_tracker.nil? or @time_tracker.paused
-        else
-            @time_tracker.time_spent = @time_tracker.hours_spent
-            @time_tracker.paused = true
-            if @time_tracker.save
-            else
+        @user_time_trackers = running_trackers
+        if not @user_time_trackers.nil?
+            for @tracker in @user_time_trackers
+                if !@tracker.nil?
+                    @tracker.time_spent = @tracker.hours_spent
+                    @tracker.paused = true
+                    @tracker.save
+                end
             end
         end
 
-        if 1
-#        if @time_tracker.nil?
+        @time_tracker = tracker_by_issue(params[:issue_id])
+
+        if @time_tracker.nil?
             @issue = Issue.find(:first, :conditions => { :id => params[:issue_id] })
             @time_tracker = TimeTracker.new({ :issue_id => @issue.id })
 
@@ -35,7 +36,10 @@ class TimeTrackersController < ApplicationController
                 flash[:error] = l(:start_time_tracker_error)
             end
         else
-            flash[:error] = l(:time_tracker_already_running_error)
+            @time_tracker.started_on = Time.now
+            @time_tracker.paused = false
+            @time_tracker.save
+            render_menu
         end
     end
 
@@ -119,6 +123,14 @@ class TimeTrackersController < ApplicationController
 
     def current
         TimeTracker.find(:first, :conditions => { :user_id => User.current.id }, :order=>'paused ASC')
+    end
+
+    def tracker_by_issue(issue)
+        TimeTracker.find(:first, :conditions => { :user_id => User.current.id, :issue_id => issue})
+    end
+
+    def running_trackers
+        TimeTracker.find(:all, :conditions => { :user_id => User.current.id, :paused => false })
     end
 
     def apply_status_transition(issue)
