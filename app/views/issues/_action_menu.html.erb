@@ -45,7 +45,7 @@
 
     <%# A time tracker exists, display the stop action %>
         <span id="b_t_stop">
-        <%= link_to l(:stop_time_tracker).capitalize + ' #' + @issue.id.to_s, { :controller => '/time_trackers', :action => 'stop' },
+        <%= link_to l(:stop_time_tracker).capitalize + ' #' + @issue.id.to_s, { :controller => '/time_trackers', :action => 'stop', :issue_id => @issue.id },
             { :class => 'icon icon-stop' } %>
         </span>
 
@@ -57,7 +57,7 @@
             :url => { :controller => '/time_trackers', :action => 'start', :issue_id => @issue.id },
             :html => { :class => 'icon icon-start' },
             :update => 'time-tracker-menu',
-            :complete => '$("b_t_start").hide();$("b_t_pause").show();'
+            :complete => '$("b_t_start").hide();$("b_t_pause").show();$("b_t_stop").show();'
         %>
         </span>
 
@@ -82,7 +82,7 @@
 
     <%# A time tracker exists, display the stop action %>
         <span id="b_t_stop" style="display:none">
-        <%= link_to l(:stop_time_tracker).capitalize + ' #' + @issue_id.to_s, { :controller => '/time_trackers', :action => 'stop' },
+        <%= link_to l(:stop_time_tracker).capitalize + ' #' + @issue_id.to_s, { :controller => '/time_trackers', :action => 'stop', :issue_id => @issue.id },
             { :class => 'icon icon-stop' } %>
         </span>
 
