@@ -5,5 +5,7 @@ ActionController::Routing::Routes.draw do |map|
     map.connect '/time_trackers/render_menu', :controller => 'time_trackers', :action => 'render_menu'
     map.connect '/time_trackers/show_report', :controller => 'time_trackers', :action => 'show_report' 
     map.connect '/time_trackers/delete', :controller => 'time_trackers', :action => 'delete' 
+    map.connect '/time_trackers/add_status_transition', :controller => 'time_trackers', :action => 'add_status_transition' 
+    map.connect '/time_trackers/delete_status_transition', :controller => 'time_trackers', :action => 'delete_status_transition' 
     map.connect '/time_trackers', :controller => 'time_trackers', :action => 'index'
 end
