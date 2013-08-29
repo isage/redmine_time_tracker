@@ -121,9 +121,9 @@
                                 <td class="spent-time"><%= time_tracker.time_spent_to_s %></td>
                                 <td class="issue">
                                 <% if time_tracker.paused %>
-                                    <span class="tracker_status_row" id="timetracker_status_<%= time_tracker.id.to_s %>"><%= l(:time_tracker_label_status_paused) %></span>
+                                    <span class="tracker_status_row" style="color: #999900;" id="timetracker_status_<%= time_tracker.id.to_s %>"><%= l(:time_tracker_label_status_paused) %></span>
                                 <% else %>
-                                    <span class="tracker_status_row" id="timetracker_status_<%= time_tracker.id.to_s %>"><%= l(:time_tracker_label_status_running) %></span>
+                                    <span class="tracker_status_row" style="color: #009900;" id="timetracker_status_<%= time_tracker.id.to_s %>"><%= l(:time_tracker_label_status_running) %></span>
                                 <% end %>
                                 </td>
                                 <td class="buttons">
