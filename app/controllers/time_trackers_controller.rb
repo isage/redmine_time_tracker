@@ -1,13 +1,18 @@
 class TimeTrackersController < ApplicationController
     unloadable
 
+    helper :sort
+    include SortHelper
+
     def index
+        sort_init([['issue_id', 'desc']])
+        sort_update %w(issue_id user_id paused time_spent started_on)
         if User.current.nil?
             @user_time_trackers = nil
-            @time_trackers = TimeTracker.find(:all)
+            @time_trackers = TimeTracker.find(:all, :order => sort_clause)
         else
             @user_time_trackers = TimeTracker.find(:all, :conditions => { :user_id => User.current.id })
-            @time_trackers = TimeTracker.find(:all, :conditions => [ 'user_id != ?', User.current.id ])
+            @time_trackers = TimeTracker.find(:all, :conditions => [ 'user_id != ?', User.current.id ], :order => sort_clause)
         end
     end
 

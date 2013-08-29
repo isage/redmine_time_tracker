@@ -97,11 +97,21 @@
                     <thead>
                         <tr>
                             <th class="zombie"></th>
-                            <th class="user"><%= l(:label_user) %></th>
-                            <th class="issue"><%= l(:label_issue) %></th>
-                            <th class="start-date"><%= l(:time_tracker_label_start_date) %></th>
+                            <%= sort_header_tag('user_id', :caption => l(:label_user), :default_order => 'desc', :class => 'user') %>
+                            <!--th class="user"><%= l(:label_user) %></th-->
+
+                            <%= sort_header_tag('issue_id', :caption => l(:label_issue), :default_order => 'desc', :class => 'issue') %>
+                            <!--th class="issue"><%= l(:label_issue) %></th-->
+
+                            <%= sort_header_tag('started_on', :caption => l(:time_tracker_label_start_date), :default_order => 'desc', :class => 'start-date') %>
+                            <!--th class="start-date"><%= l(:time_tracker_label_start_date) %></th-->
+
+                            <!--%= sort_header_tag('time_spent', :caption => l(:label_spent_time), :default_order => 'desc', :class => 'spent-time') %-->
                             <th class="spent-time"><%= l(:label_spent_time) %></th>
-                            <th class="issue"><%= l(:time_tracker_label_status) %></th>
+
+                            <%= sort_header_tag('paused', :caption => l(:time_tracker_label_status), :default_order => 'desc', :class => 'issue') %>
+                            <!--th class="issue"><%= l(:time_tracker_label_status) %></th-->
+
                             <th class="buttons"><%= l(:time_tracker_label_action) %></th>
                         </tr>
                     </thead>
