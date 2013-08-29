@@ -101,6 +101,7 @@
                             <th class="issue"><%= l(:label_issue) %></th>
                             <th class="start-date"><%= l(:time_tracker_label_start_date) %></th>
                             <th class="spent-time"><%= l(:label_spent_time) %></th>
+                            <th class="issue"><%= l(:time_tracker_label_status) %></th>
                             <th class="buttons"><%= l(:time_tracker_label_action) %></th>
                         </tr>
                     </thead>
@@ -118,6 +119,13 @@
                                 <td class="issue"><% if !issue_from_id(time_tracker[:issue_id]).nil? %><%= link_to_issue issue_from_id(time_tracker[:issue_id]), :project => true %><% end %></td>
                                 <td class="start-date"><%= format_time(time_tracker[:started_on]) %></td>
                                 <td class="spent-time"><%= time_tracker.time_spent_to_s %></td>
+                                <td class="issue">
+                                <% if time_tracker.paused %>
+                                    <span class="tracker_status_row" id="timetracker_status_<%= time_tracker.id.to_s %>"><%= l(:time_tracker_label_status_paused) %></span>
+                                <% else %>
+                                    <span class="tracker_status_row" id="timetracker_status_<%= time_tracker.id.to_s %>"><%= l(:time_tracker_label_status_running) %></span>
+                                <% end %>
+                                </td>
                                 <td class="buttons">
                                     <% if User.current.allowed_to?(:delete_others_time_trackers, nil, :global => true) %>
                                         <%= link_to_remote l(:time_tracker_label_delete),
