@@ -45,3 +45,5 @@ de:
   time_tracker_label_status: "Status"
   time_tracker_label_status_running: "in vervahren"
   time_tracker_label_status_paused: "pausiert"
+  time_tracker_mail_deleted_subject: "Administrator gelöscht Ihrer Zeiterfassung für Ticket #%{issue_id}."
+  time_tracker_mail_deleted_body: "Zeitaufwand: %{hours}"

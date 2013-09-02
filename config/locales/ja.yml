@@ -43,3 +43,5 @@ ja:
   time_tracker_label_status: "ステータス"
   time_tracker_label_status_running: "プロセスの"
   time_tracker_label_status_paused: "一時停止中"
+  time_tracker_mail_deleted_subject: "Administrator deleted your time tracker for issue #%{issue_id}."
+  time_tracker_mail_deleted_body: "Time running: %{hours}"

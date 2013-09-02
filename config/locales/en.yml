@@ -43,3 +43,7 @@ en:
   time_tracker_label_status: "Status"
   time_tracker_label_status_running: "running"
   time_tracker_label_status_paused: "paused"
+  time_tracker_mail_deleted_subject: "Administrator deleted your time tracker for issue #%{issue_id}."
+  time_tracker_mail_deleted_body: "Time running: %{hours}"
+
+

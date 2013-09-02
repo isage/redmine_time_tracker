@@ -43,3 +43,5 @@ ko:
   time_tracker_label_status: "지위"
   time_tracker_label_status_running: "과정에서"
   time_tracker_label_status_paused: "일시 중지"
+  time_tracker_mail_deleted_subject: "Administrator deleted your time tracker for issue #%{issue_id}."
+  time_tracker_mail_deleted_body: "Time running: %{hours}"

@@ -1,4 +1,10 @@
 require 'redmine'
+require 'dispatcher'
+require 'time_tracker_patch'
+
+Dispatcher.to_prepare do
+  Mailer.send(:include, TimeTrackerMailer)
+end
 
 require_dependency 'time_tracker_hooks'
 

@@ -43,3 +43,5 @@ cs:
   time_tracker_label_status: "Postavení"
   time_tracker_label_status_running: "v práci"
   time_tracker_label_status_paused: "pozastavena"
+  time_tracker_mail_deleted_subject: "Administrátor smazal váš sledování času pro splnění úkolu #%{issue_id}."
+  time_tracker_mail_deleted_body: "Čas strávený: %{hours}"

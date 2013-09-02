@@ -81,6 +81,9 @@ class TimeTrackersController < ApplicationController
     def delete
         time_tracker = TimeTracker.find(:first, :conditions => { :id => params[:id] })
         if !time_tracker.nil?
+            if time_tracker.user_id != User.current.id
+                Mailer.deliver_tracker_deleted(time_tracker)
+            end
             time_tracker.destroy
         end
         render_menu
