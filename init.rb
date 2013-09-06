@@ -1,15 +1,8 @@
 require 'redmine'
-require 'dispatcher' unless Rails::VERSION::MAJOR >= 3
 
-if Rails::VERSION::MAJOR >= 3
-  ActionDispatch::Callbacks.to_prepare do
-    require 'time_tracker_patch'
-    require 'time_tracker_helper_patches'
-  end
-else
-  Dispatcher.to_prepare do
-    require 'time_tracker_patch'
-  end
+ActionDispatch::Callbacks.to_prepare do
+  require 'time_tracker_patch'
+  require 'time_tracker_helper_patches'
 end
 
 require_dependency 'time_tracker_hooks'

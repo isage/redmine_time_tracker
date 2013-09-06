@@ -82,11 +82,7 @@ class TimeTrackersController < ApplicationController
         time_tracker = TimeTracker.find(:first, :conditions => { :id => params[:id] })
         if !time_tracker.nil?
             if time_tracker.user_id != User.current.id
-              if Rails::VERSION::MAJOR >= 3
-                Mailer.tracker_deleted(time_tracker).deliver
-              else
-                Mailer.deliver_tracker_deleted(time_tracker)
-              end
+              Mailer.tracker_deleted(time_tracker).deliver
             end
             time_tracker.destroy
         end
