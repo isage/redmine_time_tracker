@@ -6,6 +6,10 @@ class TimeTrackerHooks < Redmine::Hook::ViewListener
     def view_layouts_base_html_head(context = {})
         css = stylesheet_link_tag 'time_tracker.css', :plugin => 'redmine_time_tracker'
         js = javascript_include_tag 'time_tracker.js', :plugin => 'redmine_time_tracker'
-        css + js
+        if Redmine::VERSION::MAJOR>1
+          css
+        else
+          css + js
+        end
     end
 end

@@ -1,3 +1,7 @@
+<% if Redmine::VERSION::MAJOR>1%>
+<%= javascript_include_tag "index.js", :plugin => "redmine_time_tracker" %>
+<% end %>
+
 <h2><%= l(:time_tracker_list_title) %></h2>
 
 <% has_zombie = false %>
@@ -39,6 +43,36 @@
                                 <% end %>
                                 </td>
                                 <td class="buttons">
+                                  <% if Redmine::VERSION::MAJOR>1%>
+                                    <% if time_tracker.paused %>
+                                        <%= link_to l(:start_time_tracker),
+                                            { :controller => '/time_trackers', :action => 'start', :issue_id => time_tracker[:issue_id] },
+                                            { :class => 'icon icon-start tracker_start', :title => l(:start_time_tracker), :id =>"tracker_start_" + time_tracker.id.to_s, :remote => true }
+                                        %>
+                                        <%= link_to l(:suspend_time_tracker),
+                                            { :controller => '/time_trackers', :action => 'suspend', :issue_id => time_tracker[:issue_id] },
+                                            { :class => 'icon icon-pause tracker_pause', :title => l(:suspend_time_tracker), :id =>"tracker_suspend_" + time_tracker.id.to_s, :style=>"display: none", :remote => true }
+                                        %>
+                                    <% else %>
+                                        <%= link_to l(:start_time_tracker),
+                                            { :controller => '/time_trackers', :action => 'start', :issue_id => time_tracker[:issue_id] },
+                                            { :class => 'icon icon-start tracker_start', :title => l(:start_time_tracker), :id => "tracker_start_" + time_tracker.id.to_s, :style=>"display: none", :remote => true }
+                                        %>
+                                        <%= link_to l(:suspend_time_tracker),
+                                            { :controller => '/time_trackers', :action => 'suspend', :issue_id => time_tracker[:issue_id] },
+                                            { :class => 'icon icon-pause tracker_pause', :title => l(:suspend_time_tracker), :id =>"tracker_suspend_" + time_tracker.id.to_s, :remote => true }
+                                        %>
+                                    <% end %>
+                                    <%= link_to l(:stop_time_tracker),
+                                        { :controller => '/time_trackers', :action => 'stop', :issue_id => time_tracker[:issue_id] },
+                                        { :class => 'icon icon-stop', :title => l(:stop_time_tracker) }
+                                    %>
+                                    <%= link_to l(:time_tracker_label_delete),
+                                        { :controller => '/time_trackers', :action => 'delete', :id => time_tracker.id },
+                                        { :class => 'icon icon-del', :remote => true }
+                                    %>
+
+                                  <% else %>
                                     <% if time_tracker.paused %>
                                         <%= link_to_remote l(:start_time_tracker),
                                             :url => { :controller => '/time_trackers', :action => 'start', :issue_id => time_tracker[:issue_id] },
@@ -76,6 +110,7 @@
                                         :update => 'time-tracker-menu',
                                         :complete => "$('#{'user-timetracker' + time_tracker.id.to_s}').update('<td colspan=\"0\" class=\"msg\">" + l(:time_tracker_delete_success) + "</td>');"
                                     %>
+                                  <% end %>
                                 </td>
                             </tr>
                         <% end %>
@@ -138,11 +173,18 @@
                                 </td>
                                 <td class="buttons">
                                     <% if User.current.allowed_to?(:delete_others_time_trackers, nil, :global => true) %>
+                                      <% if Redmine::VERSION::MAJOR>1%>
+                                        <%= link_to l(:time_tracker_label_delete),
+                                            { :controller => '/time_trackers', :action => 'delete', :id => time_tracker.id },
+                                            { :class => 'icon icon-del', :remote => true }
+                                        %>
+                                      <% else %>
                                         <%= link_to_remote l(:time_tracker_label_delete),
                                             :url => { :controller => '/time_trackers', :action => 'delete', :id => time_tracker.id },
                                             :html => { :class => 'icon icon-del' },
                                             :complete => "$('#{'all-timetracker' + time_tracker.id.to_s}').update('<td colspan=\"0\" class=\"msg\">' + request.responseText + '</td>');"
                                         %>
+                                      <% end %>
                                     <% end %>
                                 </td>
                             </tr>

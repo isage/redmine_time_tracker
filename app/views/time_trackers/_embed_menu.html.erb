@@ -7,15 +7,13 @@
             { :class => 'icon icon-pause' }
         %>
          / <%= time_tracker.time_spent_to_s %> /
-        <%= link_to_remote '',
-            :url => { :controller => '/time_trackers', :action => 'start', :issue_id => time_tracker.issue_id },
-            :html => { :class => 'icon-action icon-start-action', :title => l(:resume_time_tracker) },
-            :update => 'time-tracker-menu',
-            :complete => "updateTrackersStatus('"+ l(:time_tracker_label_status_paused) +"','"+ l(:time_tracker_label_status_running) +"','"+time_tracker.id.to_s+"', true);"
+        <%= link_to '',
+            { :controller => '/time_trackers', :action => 'start', :issue_id => time_tracker.issue_id },
+            { :class => 'icon-action icon-start-action', :title => l(:resume_time_tracker) , :id=> 'timet_resume', :remote => true}
         %>
         <%= link_to '',
             { :controller => '/time_trackers', :action => 'stop', :issue_id => time_tracker.issue_id },
-            { :class => 'icon-action icon-stop-action', :title => l(:stop_time_tracker) }
+            { :class => 'icon-action icon-stop-action', :title => l(:stop_time_tracker), :id=> 'timet_stop' }
          %>
     <% else %>
         <%# A time tracker is running, display the tracked issue, the time spent and the suspend/stop actions %>
@@ -24,25 +22,21 @@
             { :class => 'icon icon-clock' }
         %>
          / <%= time_tracker.time_spent_to_s %> /
-        <%= link_to_remote '',
-            :url => { :controller => '/time_trackers', :action => 'suspend', :issue_id => time_tracker.issue_id },
-            :html => { :class => 'icon-action icon-pause-action', :title => l(:suspend_time_tracker) },
-            :update => 'time-tracker-menu',
-            :complete => "updateTrackersStatus('"+ l(:time_tracker_label_status_paused) +"','"+ l(:time_tracker_label_status_running) +"','"+time_tracker.id.to_s+"', false);"
+        <%= link_to '',
+            { :controller => '/time_trackers', :action => 'suspend', :issue_id => time_tracker.issue_id },
+            { :class => 'icon-action icon-pause-action', :title => l(:suspend_time_tracker), :id=> 'timet_pause', :remote => true }
         %>
         <%= link_to '',
             { :controller => '/time_trackers', :action => 'stop', :issue_id => time_tracker.issue_id },
-            { :class => 'icon-action icon-stop-action', :title => l(:stop_time_tracker) }
+            { :class => 'icon-action icon-stop-action', :title => l(:stop_time_tracker), :id=> 'timet_stop' }
         %>
     <% end %>
 <% elsif !@project.nil? and User.current.allowed_to?(:log_time, @project) and !(@issue.nil? || @issue.new_record?) %>
     <%# No time tracker is running, but the user look at an issue and he has the rights to track time on it %>
     <%# Display the start time tracker action on this issue %>
-    <%= link_to_remote l(:start_time_tracker) + ' #' + @issue.id.to_s + '&nbsp;',
-        :url => { :controller => '/time_trackers', :action => 'start', :issue_id => @issue.id },
-        :html => { :class => 'icon icon-start' },
-        :update => 'time-tracker-menu',
-        :complete => 'window.location.reload();'
+    <%= link_to l(:start_time_tracker) + ' #' + @issue.id.to_s + ' ',
+        { :controller => '/time_trackers', :action => 'start', :issue_id => @issue.id },
+        { :class => 'icon icon-start', :remote => true, :id=> 'timet_start' }
     %>
 <% elsif global_allowed_to?(User.current, :log_time) %>
     <%# No time tracker is running but the user has the rights to track time on a project %>

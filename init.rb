@@ -1,9 +1,15 @@
 require 'redmine'
-require 'dispatcher'
-require 'time_tracker_patch'
+require 'dispatcher' unless Rails::VERSION::MAJOR >= 3
 
-Dispatcher.to_prepare do
-  Mailer.send(:include, TimeTrackerMailer)
+if Rails::VERSION::MAJOR >= 3
+  ActionDispatch::Callbacks.to_prepare do
+    require 'time_tracker_patch'
+    require 'time_tracker_helper_patches'
+  end
+else
+  Dispatcher.to_prepare do
+    require 'time_tracker_patch'
+  end
 end
 
 require_dependency 'time_tracker_hooks'

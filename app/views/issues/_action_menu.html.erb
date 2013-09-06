@@ -1,7 +1,124 @@
 <% time_tracker = current_time_tracker_for_issue(User.current, @issue) %>
 
 <div class="contextual">
-<% if !time_tracker.nil? %>
+<% if Redmine::VERSION::MAJOR>1%>
+  <% if !time_tracker.nil? %>
+    <% if time_tracker.paused %>
+        <%# A time tracker is paused, display the resume action %>
+        <span class="b_t_resume">
+        <%= link_to l(:resume_time_tracker).capitalize + ' #' + @issue.id.to_s,
+            { :controller => '/time_trackers', :action => 'start', :issue_id => @issue.id },
+            { :class => 'icon icon-start', :remote => true }
+        %>
+        </span>
+        <span class="b_t_pause" style="display:none">
+        <%# A time tracker is not paused, display the suspend action %>
+        <%= link_to l(:suspend_time_tracker).capitalize + ' #' + @issue.id.to_s,
+            { :controller => '/time_trackers', :action => 'suspend', :issue_id => @issue.id },
+            { :class => 'icon icon-pause', :remote => true }
+        %>
+        </span>
+
+    <% else %>
+        <span class="b_t_resume" style="display:none">
+        <%= link_to l(:resume_time_tracker).capitalize + ' #' + @issue.id.to_s,
+            { :controller => '/time_trackers', :action => 'start', :issue_id => @issue.id },
+            { :class => 'icon icon-start', :remote => true }
+        %>
+        </span>
+
+        <span class="b_t_pause">
+        <%# A time tracker is not paused, display the suspend action %>
+        <%= link_to l(:suspend_time_tracker).capitalize + ' #' + @issue.id.to_s,
+            { :controller => '/time_trackers', :action => 'suspend', :issue_id => @issue.id },
+            { :class => 'icon icon-pause', :remote => true }
+        %>
+        </span>
+    <% end %>
+
+    <%# A time tracker exists, display the stop action %>
+        <span class="b_t_stop">
+        <%= link_to l(:stop_time_tracker).capitalize + ' #' + @issue.id.to_s, { :controller => '/time_trackers', :action => 'stop', :issue_id => @issue.id },
+            { :class => 'icon icon-stop' } %>
+        </span>
+
+  <% elsif !@project.nil? and !@issue.nil? and User.current.allowed_to?(:log_time, @project) %>
+    <%# No time tracker is running, but the user has the rights to track time on this issue %>
+    <%# Display the start time tracker action %>
+        <span class="b_t_start">
+        <%= link_to l(:start_time_tracker).capitalize + ' #' + @issue.id.to_s ,
+            { :controller => '/time_trackers', :action => 'start', :issue_id => @issue.id },
+            { :class => 'icon icon-start', :remote => true }
+        %>
+        </span>
+
+        <%# A time tracker is paused, display the resume action %>
+        <span class="b_t_resume" style="display:none">
+        <%= link_to l(:resume_time_tracker).capitalize + ' #' + @issue_id.to_s,
+            { :controller => '/time_trackers', :action => 'start', :issue_id => @issue.id },
+            { :class => 'icon icon-start', :remote => true }
+        %>
+        </span>
+        <span class="b_t_pause" style="display:none">
+        <%# A time tracker is not paused, display the suspend action %>
+        <%= link_to l(:suspend_time_tracker).capitalize + ' #' + @issue_id.to_s,
+            :url => { :controller => '/time_trackers', :action => 'suspend', :issue_id => @issue.id },
+            :html => { :class => 'icon icon-pause', :remote => true }
+        %>
+        </span>
+
+    <%# A time tracker exists, display the stop action %>
+        <span class="b_t_stop" style="display:none">
+        <%= link_to l(:stop_time_tracker).capitalize + ' #' + @issue_id.to_s, { :controller => '/time_trackers', :action => 'stop', :issue_id => @issue.id },
+            { :class => 'icon icon-stop' } %>
+        </span>
+
+  <% end %>
+
+<script>
+function refreshButtons(event){
+  if(event.target.id=="timet_resume")
+  {
+    $(".b_t_resume").hide();
+    $(".b_t_pause").show();
+  }
+  if(event.target.id=="timet_pause")
+  {
+    $(".b_t_resume").show();
+    $(".b_t_pause").hide();
+  }
+  if (event.target.id=="timet_start")
+    window.location.reload();
+  console.log(event);
+}
+
+function updateTrackerState(event, data, status, xhr){
+  if (event.currentTarget.className=="b_t_resume")
+  {
+    $(".b_t_resume").hide();
+    $(".b_t_pause").show();
+  }
+  if (event.currentTarget.className=="b_t_pause")
+  {
+    $(".b_t_resume").show();
+    $(".b_t_pause").hide();
+  }
+  if (event.currentTarget.className=="b_t_start")
+    window.location.reload();
+  updateMenu();
+};
+
+$(document).ready(function(){
+  $("[class^=b_t_]").each(function(){
+    $(this).on("ajax:success", updateTrackerState);
+  });
+});
+</script>
+
+
+<% else %>
+<%# old redmine %>
+  <% if !time_tracker.nil? %>
     <% if time_tracker.paused %>
         <%# A time tracker is paused, display the resume action %>
         <span id="b_t_resume">
@@ -86,6 +203,7 @@
             { :class => 'icon icon-stop' } %>
         </span>
 
+<% end %>
 <% end %>
 
 <%= link_to_if_authorized(l(:button_update), {:controller => 'issues', :action => 'edit', :id => @issue }, :onclick => 'showAndScrollTo("update", "notes"); return false;', :class => 'icon icon-edit', :accesskey => accesskey(:edit)) %>
