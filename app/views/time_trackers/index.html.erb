@@ -1,5 +1,3 @@
-<%= javascript_include_tag "index.js", :plugin => "redmine_time_tracker" %>
-
 <h2><%= l(:time_tracker_list_title) %></h2>
 
 <% has_zombie = false %>
@@ -151,3 +149,58 @@
 <% if has_zombie %>
     <p class="legend icon icon-warning"><%= l(:time_tracker_zombie_legend) %></p>
 <% end %>
+
+<script>
+function updateTrackersStatus(paused_str, running_str, id, running)
+{
+    if ($('.tracker_status_row')!='')
+    {
+        $('.tracker_status_row').each( function() { 
+            $(this).html(paused_str);
+        });
+        if (!running)
+        {
+            $('.tracker_start').each(function() {$(this).show();});
+            $('.tracker_pause').each(function() {$(this).hide();});
+            $('#tracker_start_' + id).show();
+            $('#tracker_suspend_' + id).hide();
+        }
+        else
+        {
+            $('#timetracker_status_' + id).html(running_str);
+            $('.tracker_start').each(function() {$(this).show();});
+            $('.tracker_pause').each(function() {$(this).hide();});
+            $('#tracker_start_' + id).hide();
+            $('#tracker_suspend_' + id).show();
+        }
+    }
+}
+
+
+function updateAfterDelete(event, data, status, xhr){
+  $(this).html('<td colspan="7" class="msg"><%=l(:time_tracker_delete_success)%></td>');
+  updateMenu();
+};
+
+function updateAfterChange(event, data, status, xhr){
+  if($(event.target).is("[id^=tracker_start_]"))
+    updateTrackersStatus('<%=l(:time_tracker_label_status_paused)%>','<%=l(:time_tracker_label_status_running)%>',event.target.id.replace('tracker_start_',''),true);
+  else if($(event.target).is("[id^=tracker_suspend_]"))
+    updateTrackersStatus('<%=l(:time_tracker_label_status_paused)%>','<%=l(:time_tracker_label_status_running)%>',event.target.id.replace('tracker_suspend_',''), false);
+  else
+    $(this).html('<td colspan="6" class="msg"><%=l(:time_tracker_delete_success)%></td>');
+  updateMenu();
+};
+
+$(document).ready(function(){
+  $("[id^=user-timetracker]").each(function(){
+    $(this).on("ajax:success", updateAfterChange);
+  });
+
+  $("[id^=all-timetracker]").each(function(){
+    $(this).on("ajax:success", updateAfterDelete);
+  });
+});
+
+
+</script>
