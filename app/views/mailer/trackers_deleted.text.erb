@@ -1,0 +1,15 @@
+Добрый день.
+
+
+Time Tracker слезно умолял передать вам, что по следующим задачам счетчик учтенного времени был запущен более, чем установленный регламентом лимит в 8 часов.
+
+
+<% for @tracker in @trackers %>
+<%= url_for( :controller => '/issues', :action => 'show', :id => @tracker.issue_id, :only_path => false ) %> - <%= @tracker.time_spent_to_s %> ( User.find(:first, :conditions => { :id => @tracker.user_id }).name <%= url_for( :controller => 'users', :action => 'show', :id => User.find(:first, :conditions => { :id => @tracker.user_id }), :only_path => false) %> )
+<% end %>
+
+Time Tracker надеется, что вы примете меры, потому что «доколе!», «сил моих больше нет!», а дальше неразборчиво.
+
+Спасибо.
+
+

@@ -1,0 +1,17 @@
+<h2>Добрый день.</h2>
+
+
+<b>Time Tracker устал считать время по следующим задачам, поэтому решил их удалить.</b>
+
+<ul>
+<% for @tracker in @trackers %>
+<li><%= link_to '#' + @tracker.issue_id.to_s,
+            { :controller => '/issues', :action => 'show', :id => @tracker.issue_id, :only_path => false }
+        %> - <%= @tracker.time_spent_to_s %> ( <%= link_to User.find(:first, :conditions => { :id => @tracker.user_id }).name, { :controller => 'users', :action => 'show', :id => User.find(:first, :conditions => { :id => @tracker.user_id }), :only_path => false} %> )</li>
+<% end %>
+
+<p>Time Tracker надеется, что вы примете меры, чтобы впредь этого не повторялось.</p>
+<p></p>
+<p>Спасибо.</p>
+
+
