@@ -1,4 +1,5 @@
-<% time_tracker = current_time_tracker_for_issue(User.current, @issue.id) %>
+<% if !@issue.nil? %>
+  <% time_tracker = current_time_tracker_for_issue(User.current, @issue.id) %>
 
   <% if !time_tracker.nil? %>
     <% if time_tracker.paused %>
@@ -34,6 +35,7 @@
         %>
     </li>
   <% end %>
+<% end %>
 <script>
 $(document).ready(function () {
     $('#context-menu').bind('ajax:success', function(event, data, status, xhr) { refreshCallback(event, data, status, xhr);contextMenuHide(); });
