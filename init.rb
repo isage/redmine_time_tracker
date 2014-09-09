@@ -6,6 +6,7 @@ ActionDispatch::Callbacks.to_prepare do
 end
 
 require_dependency 'time_tracker_hooks'
+require 'time_tracker_helper_patches'
 
 Redmine::Plugin.register :redmine_time_tracker do
     name 'Redmine Time Tracker plugin'
